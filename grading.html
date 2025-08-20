@@ -120,18 +120,17 @@
           type="number"
           id="score"
           name="score"
-          min="0"
-          max="100"
           step="1"
-          required
+          placeholder="Enter your score"
+          autofocus
         />
         <br />
         <button type="submit">Submit</button>
-        <button type="button" onclick="goBack()">Reset</button>
+        <button type="button" onclick="clear()">Clear</button>
       </form>
-      <div id="result"></div>
+      <p id="result"></p>
       <!-- Back to Home button -->
-      <a href="index.html" class="back-home">⬅ Back to Home</a>
+      <a href="index.html" class="back-home">Back to Home</a>
     </div>
 
     <script>
@@ -142,9 +141,8 @@
         const scoreStr = scoreInput.value.trim();
 
         resultEl.textContent = "";
-        resultEl.className = "";
 
-        if (scoreStr === "") {
+        if (scoreStr === "" || scoreStr === null) {
           resultEl.textContent = "Please enter a score.";
           resultEl.classList.add("error");
           return;
@@ -176,7 +174,7 @@
         resultEl.classList.add("valid");
       }
 
-      function goBack() {
+      function clear() {
         const form = document.getElementById("gradeForm");
         const resultEl = document.getElementById("result");
 

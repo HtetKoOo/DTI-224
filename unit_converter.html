@@ -63,6 +63,10 @@
         margin-bottom: 10px;
       }
 
+      .error {
+        color: #e63946; /* red */
+      }
+
       #resultValue {
         font-weight: bold;
         margin-top: 15px;
@@ -126,14 +130,14 @@
           <option value="temperature">Temperature</option>
           <option value="area">Area</option>
         </select>
-        <br />
+        <p id="errorMessage"></p>
         <button onclick="showConverter()">Next</button>
       </div>
 
       <div id="converterContainer" style="display: none"></div>
 
       <a href="index.html" class="back-home" style="display: block"
-        >⬅ Back to Home</a
+        >Back to Home</a
       >
     </div>
 
@@ -143,9 +147,12 @@
         const container = document.getElementById("converterContainer");
         const selector = document.getElementById("selectorContainer");
 
-        if (!type) {
-          alert("Please select a conversion type before proceeding.");
+        if (type === "" || type ===null) {
+          document.getElementById("errorMessage").innerHTML = "Please select a conversion type.";
+          document.getElementById("errorMessage").classList.add("error");
           return;
+        }else{
+          document.getElementById("errorMessage").innerHTML = "";
         }
 
         selector.style.display = "none";
@@ -164,7 +171,7 @@
         };
 
         container.innerHTML = `
-          <input type="number" id="inputValue" placeholder="Enter value" step="any" autofocus/>
+          <input type="number" id="inputValue" placeholder="Enter value" step="any" autofocus required/>
           <select id="fromUnit">
             ${units[type]
               .map((u) => `<option value="${u.toLowerCase()}">${u}</option>`)
@@ -264,7 +271,7 @@
 
       function resetForm() {
         document.getElementById("inputValue").value = "";
-        document.getElementById("resultValue").innerHTML = "";
+        document.getElementById("resultValue").value = "";
         document.getElementById("inputValue").focus();
       }
 
